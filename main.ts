@@ -8,9 +8,11 @@ namespace SpriteKind {
     export const sideBin = SpriteKind.create()
     export const unknownBin = SpriteKind.create()
 }
-// Create and place game map and objects
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    pause2 = !(pause2)
+
+//  Create and place game map and objects
+controller.B.onEvent(ControllerButtonEvent.Pressed, function on_b_pressed() {
+    
+    pause2 = !pause2
     if (true) {
         box.setVelocity(0, 0)
         box.setFlag(SpriteFlag.Ghost, true)
@@ -20,10 +22,12 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         box.setFlag(SpriteFlag.Invisible, false)
         resetBox()
     }
+    
     scene.cameraFollowSprite(monkey)
 })
-// Reset to initial conditions with new box and parameters for type and dimensions
-function resetBox () {
+//  Reset to initial conditions with new box and parameters for type and dimensions
+function resetBox() {
+    
     _type = randint(0, 2)
     if (_type == 0) {
         boxLength = 10
@@ -45,6 +49,7 @@ function resetBox () {
         objectMaterial = "Unknown"
         objectWeight = randint(0, 2)
     }
+    
     console.log(_type)
     pinkButton.setFlag(SpriteFlag.Ghost, false)
     blueButton.setFlag(SpriteFlag.Ghost, false)
@@ -55,12 +60,12 @@ function resetBox () {
     pause(200)
     box.setVelocity(25, 0)
 }
-function stop_box () {
+
+function stop_box() {
     box.setVelocity(0, 0)
 }
-/**
- * Pause the game, click reset to restart the game and bring back the box
- */
+
+/** Pause the game, click reset to restart the game and bring back the box */
 let orientation = 0
 let objectWeight = 0
 let objectMaterial = ""
@@ -68,8 +73,8 @@ let boxHeight = 0
 let boxWidth = 0
 let boxLength = 0
 let _type = 0
-let pinkButton: Sprite = null
-let monkey: Sprite = null
+let pinkButton : Sprite = null
+let monkey : Sprite = null
 let pause2 = false
 let blueButton : Sprite = null
 let box : Sprite = null
@@ -85,198 +90,200 @@ function go_to(target_x: number, target_y: number, final: boolean = false) {
     }
     
 }
+
 let TOP = 1
-tiles.setTilemap(tilemap`level`)
+tiles.setTilemap(tilemap`
+    level
+`)
 pause2 = false
 monkey = sprites.create(img`
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ............fffff...............
-    ...........feeeeef..............
-    ..........fddddeeef.............
-    .........cdfddfdeeff............
-    .........cdfddfdeeddf...........
-    ........cdeeddddeebdc...........
-    ........cddddcddeebdc...........
-    ........cccccddeeefc............
-    .........fddddeeeff.............
-    ..........fffffeeeef............
-    ............ffeeeeeef.ff........
-    ...........feefeefeef.ef........
-    ..........feefeefeeef.ef........
-    .........fbdfdbfbbfeffef........
-    .........fddfddfddbeffff........
-    ..........fffffffffffff.........
+        ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ................................
+            ............fffff...............
+            ...........feeeeef..............
+            ..........fddddeeef.............
+            .........cdfddfdeeff............
+            .........cdfddfdeeddf...........
+            ........cdeeddddeebdc...........
+            ........cddddcddeebdc...........
+            ........cccccddeeefc............
+            .........fddddeeeff.............
+            ..........fffffeeeef............
+            ............ffeeeeeef.ff........
+            ...........feefeefeef.ef........
+            ..........feefeefeeef.ef........
+            .........fbdfdbfbbfeffef........
+            .........fddfddfddbeffff........
+            ..........fffffffffffff.........
     `, SpriteKind.Player)
 monkey.setFlag(SpriteFlag.ShowPhysics, true)
 scene.cameraFollowSprite(monkey)
 controller.moveSprite(monkey, 100, 100)
 tiles.placeOnTile(monkey, tiles.getTileLocation(5, 7))
 box = sprites.create(img`
-    f f f f f f f f f f f f f f f f 
-    f e e e e e e e e e e e e e e f 
-    f e e e e e e e e e e e e e e f 
-    f f e e e f f f f f f f f f f f 
-    f f f e e e f f e f e e f e e f 
-    f e f f e e e f f f e e f e e f 
-    f e e f f e e e f f e e f e e f 
-    f e e f f f e e e f f e f e e f 
-    f e e f e f f e e e f f f e e f 
-    f e e f e e f f e e e f f e e f 
-    f e e f e e f f f e e e f f e f 
-    f e e f e e f e f f e e e f f f 
-    f f f f f f f f f f f e e e f f 
-    f e e e e e e e e e e e e e e f 
-    f e e e e e e e e e e e e e e f 
-    f f f f f f f f f f f f f f f f 
+        f f f f f f f f f f f f f f f f 
+            f e e e e e e e e e e e e e e f 
+            f e e e e e e e e e e e e e e f 
+            f f e e e f f f f f f f f f f f 
+            f f f e e e f f e f e e f e e f 
+            f e f f e e e f f f e e f e e f 
+            f e e f f e e e f f e e f e e f 
+            f e e f f f e e e f f e f e e f 
+            f e e f e f f e e e f f f e e f 
+            f e e f e e f f e e e f f e e f 
+            f e e f e e f f f e e e f f e f 
+            f e e f e e f e f f e e e f f f 
+            f f f f f f f f f f f e e e f f 
+            f e e e e e e e e e e e e e e f 
+            f e e e e e e e e e e e e e e f 
+            f f f f f f f f f f f f f f f f
     `, SpriteKind.package)
 blueButton = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.button)
 tiles.placeOnTile(blueButton, tiles.getTileLocation(8, 7))
 pinkButton = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.button)
 tiles.placeOnTile(pinkButton, tiles.getTileLocation(2, 7))
 let unknown = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.unknownBin)
 tiles.placeOnTile(unknown, tiles.getTileLocation(4, 9))
 let cheerio = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.cheerioBin)
 tiles.placeOnTile(cheerio, tiles.getTileLocation(6, 9))
 let upOrientation = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.upBin)
 tiles.placeOnTile(upOrientation, tiles.getTileLocation(12, 7))
 let sideOrientation = sprites.create(img`
-    . . . . . . . . . . . . . . . b 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . b 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
     `, SpriteKind.sideBin)
 tiles.placeOnTile(sideOrientation, tiles.getTileLocation(10, 9))
 resetBox()
-forever(function () {
+forever(function on_forever() {
+    let SIDE: number;
     scene.cameraFollowSprite(box)
     if (box.overlapsWith(pinkButton)) {
         stop_box()
+        box.say(objectMaterial, 1000)
         if (objectMaterial == "Unknown") {
-            box.say("Material: Unknown", 1000)
             pause(1000)
             go_to(unknown.x, unknown.y, true)
-        } else if (objectMaterial == "Porcelain") {
-            box.say("Material: Porcelain", 1000)
+        } else if (objectMaterial == "Rubber") {
             pause(1000)
             go_to(cheerio.x, cheerio.y, true)
         } else {
-            let SIDE = 0
-            box.say("Material: Rubber", 1000)
+            SIDE = 0
             pause(1000)
             go_to(blueButton.x, blueButton.y)
-if (orientation == SIDE) {
+            if (orientation == SIDE) {
                 box.say("Orientation: Side", 1000)
                 pause(1000)
                 go_to(sideOrientation.x, sideOrientation.y, true)
@@ -285,6 +292,9 @@ if (orientation == SIDE) {
                 pause(1000)
                 go_to(upOrientation.x, upOrientation.y, true)
             }
+            
         }
+        
     }
+    
 })

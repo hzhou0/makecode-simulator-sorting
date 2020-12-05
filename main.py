@@ -8,11 +8,7 @@ class SpriteKind:
     downBin = SpriteKind.create()
     sideBin = SpriteKind.create()
     unknownBin = SpriteKind.create()
-"""
-
-Create and place game map and objects
-
-"""
+# Create and place game map and objects
 
 def on_b_pressed():
     global pause2
@@ -62,15 +58,6 @@ def resetBox():
     box.set_velocity(25, 0)
 def stop_box():
     box.set_velocity(0, 0)
-def go_to(target_x: number, target_y: number, final: bool = False):
-    box.vx = 25
-    pause((target_x - box.x) / box.vx * 1000)
-    stop_box()
-    box.vy = 25
-    pause((target_y - box.y) / box.vy * 1000)
-    stop_box()
-    if final:
-        resetBox()
 """
 
 Pause the game, click reset to restart the game and bring back the box
@@ -86,10 +73,18 @@ _type = 0
 pinkButton: Sprite = None
 monkey: Sprite = None
 pause2 = False
-box: Sprite = None
 blueButton: Sprite = None
+box: Sprite = None
+def go_to(target_x: number, target_y: number, final: bool = False):
+    box.vx = 25
+    pause((target_x - box.x) / box.vx * 1000)
+    stop_box()
+    box.vy = 25
+    pause((target_y - box.y) / box.vy * 1000)
+    stop_box()
+    if final:
+        resetBox()
 TOP = 1
-SIDE = 0
 tiles.set_tilemap(tilemap("""
     level
 """))
@@ -278,16 +273,15 @@ def on_forever():
     scene.camera_follow_sprite(box)
     if box.overlaps_with(pinkButton):
         stop_box()
+        box.say(objectMaterial, 1000)
         if objectMaterial == "Unknown":
-            box.say("Material: Unknown", 1000)
             pause(1000)
             go_to(unknown.x, unknown.y, True)
-        elif objectMaterial == "Porcelain":
-            box.say("Material: Porcelain", 1000)
+        elif objectMaterial == "Rubber":
             pause(1000)
             go_to(cheerio.x, cheerio.y, True)
         else:
-            box.say("Material: Rubber", 1000)
+            SIDE = 0
             pause(1000)
             go_to(blueButton.x, blueButton.y)
             if orientation == SIDE:
